@@ -1,0 +1,58 @@
+/Node js: File Handling code/
+
+const fs = require("fs");
+
+
+fs.readFile("atharva.txt", "utf8" ,(err, data) => {
+    console.log(data);
+})
+
+fs.writeFile("atharva.txt", "Pooja eats icecream", (err, data) => {
+})
+
+fs.readFile("atharva.txt", "utf8" ,(err, data) => {
+    console.log(data);
+})
+
+fs.rename("atharva.txt", "atharva.txt" ,(err, data) => {
+    console.log(data);
+})
+---------------------------------------------------------------
+1 to 10 numbers using arrow function
+
+
+// function printNums () {
+//     for (i = 1; i <= 10; i++) {
+//         console.log(i);
+//     }    
+// }
+
+
+let printNums = () => {
+    for (i = 1; i <= 10; i++) {
+        console.log(i);
+    }
+}
+
+try {
+    console.log(1/0);
+} catch(error) {
+    console.log(error);
+}
+
+printNums();
+printNums();
+---------------------------------------------------------------
+Nodejs - error handling
+
+const fs = require('fs');
+
+// Synchronous Error Handling
+try {
+  const data = fs.readFileSync('index.txt', 'utf-8');
+  console.log(data);
+} catch (error) {
+  console.error('Synchronous error:', error.message);
+}
+
+-------------------------------------------------------------
