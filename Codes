@@ -1,0 +1,714 @@
+error handling in node js :
+
+const fs = require('fs');
+
+// Synchronous Error Handling
+try {
+  const data = fs.readFileSync('jatin.txt', 'utf-8');
+  console.log(data);
+} catch (error) {
+  console.error('Synchronous error:', error.message);
+}
+
+// Asynchronous Error Handling with Promises
+const readFileAsync = (file) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, 'utf-8', (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+};
+
+readFileAsync('jatin.txt')
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.error('Asynchronous error:', error.message);
+  });
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+error handling in react:
+
+import React, { Component } from 'react';
+
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // Update state to indicate that an error has occurred
+    this.setState({ hasError: true, error });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can customize the error message here
+      return (
+        <div>
+          <h1>Something went wrong</h1>
+          <p>{this.state.error.message}</p>
+        </div>
+      );
+    }
+
+    // If no error occurred, render the child components as usual
+    return this.props.children;
+  }
+}
+
+class MyComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+  }
+
+  handleButtonClick = () => {
+    // Simulate a runtime error
+    if (this.state.count === 5) {
+      throw new Error('An error occurred!');
+    }
+    // If no error occurs, update the state
+    this.setState({ count: this.state.count + 1 });
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Counter: {this.state.count}</h1>
+        <button onClick={this.handleButtonClick}>Increment</button>
+      </div>
+    );
+  }
+}
+
+export default function App() {
+  return (
+    <div>
+      <h1>React Error Handling Example</h1>
+      <ErrorBoundary>
+        <MyComponent />
+      </ErrorBoundary>
+    </div>
+  );
+}
+----------------------------------------------------------------------------------------------------------------------------------
+
+DISPLAYING DIALOG BOX IN JAVASCRIPT:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dialog Boxes Example</title>
+</head>
+<body>
+  <button id="alertButton">Show Alert</button>
+  <button id="confirmButton">Show Confirm</button>
+  <button id="promptButton">Show Prompt</button>
+
+  <script>
+    // Alert Dialog
+    document.getElementById("alertButton").addEventListener("click", function() {
+      window.alert("This is an alert dialog. Click OK to continue.");
+    });
+
+    // Confirm Dialog
+    document.getElementById("confirmButton").addEventListener("click", function() {
+      const userConfirmed = window.confirm("Do you want to proceed?");
+      if (userConfirmed) {
+        console.log("User wants to proceed.");
+      } else {
+        console.log("User canceled the action.");
+      }
+    });
+
+    // Prompt Dialog
+    document.getElementById("promptButton").addEventListener("click", function() {
+      const userInput = window.prompt("Enter your name:", );
+      if (userInput !== null) {
+        console.log("User entered: " + userInput);
+      } else {
+        console.log("User canceled the prompt.");
+      }
+    });
+  </script>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATING REFERENCES IN REACT:
+import React, { Component } from 'react';
+
+class MyComponent extends Component {
+  constructor(props) {
+    super(props);
+    // Create a ref for an input element
+    this.myInputRef = React.createRef();
+  }
+
+  componentDidMount() {
+    // Focus on the input element when the component mounts
+    this.myInputRef.current.focus();
+  }
+
+  handleButtonClick = () => {
+    // Access and modify the input's value using the ref
+    const inputValue = this.myInputRef.current.value;
+    alert(`Input value: ${inputValue}`);
+  }
+
+  render() {
+    return (
+      <div>
+        <input type="text" ref={this.myInputRef} />
+        <button onClick={this.handleButtonClick}>Get Input Value</button>
+      </div>
+    );
+  }
+}
+
+export default MyComponent;
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+File Handling in node js :
+
+const fs = require('fs');
+
+// Create a new text file with content
+fs.writeFile('example.txt', 'Hello, Node.js!', (err) => {
+  if (err) {
+    console.error('Error creating the file:', err);
+  } else {
+    console.log('File created successfully');
+    
+    // Read the file
+    fs.readFile('example.txt', 'utf-8', (err, data) => {
+      if (err) {
+        console.error('Error reading the file:', err);
+      } else {
+        console.log('File content:', data);
+
+        // Append text to the file
+        fs.appendFile('example.txt', '\nAppended text', (err) => {
+          if (err) {
+            console.error('Error appending to the file:', err);
+          } else {
+            console.log('Text appended to the file');
+            
+            // Delete the file 
+            fs.unlink('example.txt', (err) => {
+              if (err) {
+                console.error('Error deleting the file:', err);
+              } else {
+                console.log('File deleted successfully');
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+});
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+BUFFERS IN NODE JS:
+
+// Creating a Buffer
+const buffer1 = Buffer.from('Hello, Node.js!');
+const buffer2 = Buffer.alloc(8);  // Create an empty buffer with a specified length
+
+console.log('Buffer 1:', buffer1);
+console.log('Buffer 2:', buffer2);
+
+// Modifying a Buffer
+buffer2.write('World');  // Write data to buffer2
+console.log('Modified Buffer 2:', buffer2.toString());
+
+// Concatenating Buffers
+const concatenatedBuffer = Buffer.concat([buffer1, buffer2]);
+console.log('Concatenated Buffer:', concatenatedBuffer.toString());
+
+// Slicing a Buffer
+const slicedBuffer = concatenatedBuffer.slice(0, 11);  // Slice from index 0 to 10
+console.log('Sliced Buffer:', slicedBuffer.toString());
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+STREAMS IN NODE JS:
+
+const fs = require('fs');
+
+// Create a readable stream to read from a source file
+const readableStream = fs.createReadStream('source.txt', 'utf-8');
+
+// Create a writable stream to write to a destination file
+const writableStream = fs.createWriteStream('destination.txt', 'utf-8');
+
+// Pipe the readable stream to the writable stream
+readableStream.pipe(writableStream);
+
+// Listen for 'data' events to handle chunks of data
+readableStream.on('data', (chunk) => {
+  console.log('Received a chunk of data:');
+  console.log(chunk);
+
+  // You can process the chunk here if needed
+});
+
+// Listen for 'end' event to know when the data reading is complete
+readableStream.on('end', () => {
+  console.log('Data reading is complete.');
+});
+
+// Listen for 'finish' event to know when the data writing is complete
+writableStream.on('finish', () => {
+  console.log('Data writing is complete.');
+});
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+passing parameters using props in react:
+
+import React from 'react';
+
+// Child Component
+function ChildComponent(props) {
+  return <div>{props.message}</div>;
+}
+
+// Parent Component
+function ParentComponent() {
+  const messageToChild = "Hello, Child!";
+
+  return (
+    <div>
+      <h1>Parent Component</h1>
+      {/* Pass the message as a prop to the ChildComponent */}
+      <ChildComponent message={messageToChild} />
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <div>
+      <h1>React Props Example</h1>
+      <ParentComponent />
+    </div>
+  );
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+wap using usestate, promises and events:
+import React, { useState } from 'react';
+
+function App() {
+  // Initialize state to store the fetched data
+  const [data, setData] = useState(null);
+
+  // Function to fetch data from an API using a Promise
+  const fetchData = () => {
+    fetch('https://jsonplaceholder.typicode.com/posts/1')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setData(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
+
+  // Event handler to fetch data when the button is clicked
+  const handleButtonClick = () => {
+    fetchData();
+  };
+
+  return (
+    <div>
+      <h1>useState, Promises, and Events Example</h1>
+      <button onClick={handleButtonClick}>Fetch Data</button>
+      {data ? (
+        <div>
+          <h2>Fetched Data:</h2>
+          <pre>{JSON.stringify(data, null, 2)}</pre>
+        </div>
+      ) : (
+        <p>Click the button to fetch data.</p>
+      )}
+    </div>
+  );
+}
+
+export default App;
+----------------------------------------------------------------------------
+dom manipulation using js :
+
+import React, { useRef, useState } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+  const buttonRef = useRef(null);
+
+  const incrementCount = () => {
+    setCount(count + 1);
+    if (count >= 5) {
+      // Access and manipulate the DOM element directly
+      buttonRef.current.style.backgroundColor = 'red';
+    }
+  };
+
+  return (
+    <div>
+      <h1>DOM Manipulation Example</h1>
+      <p>Count: {count}</p>
+      <button onClick={incrementCount} ref={buttonRef}>
+        Increment
+      </button>
+    </div>
+  );
+}
+
+export default App;
+------------------------------------------------------------------------------------------------------------------
+
+react form with validations:
+
+import React, { useState } from 'react';
+
+function App() {
+  const [formData, setFormData] = useState({ name: '', email: '' });
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name) {
+      newErrors.name = 'Name is required';
+    }
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = 'Invalid email format';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      // Form is valid, you can submit the data
+      console.log('Form data:', formData);
+    } else {
+      // Form is not valid, handle errors
+      console.log('Form data is not valid');
+    }
+  };
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  return (
+    <div>
+      <h1>React Form with Validation</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+          />
+          {errors.name && <span className="error">{errors.name}</span>}
+        </div>
+        <div>
+          <label>Email:</label>
+          <input
+            type="text"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+          {errors.email && <span className="error">{errors.email}</span>}
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
+}
+
+export default App;
+---------------------------------------------------------------------------------------------------------------
+custom hooks in react:
+
+import React, { useEffect, useState } from 'react';
+
+// Custom hook to get and update window dimensions
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  return windowDimensions;
+}
+
+function App() {
+  const { width, height } = useWindowDimensions();
+
+  return (
+    <div>
+      <h1>Custom Hook Example</h1>
+      <p>Window Width: {width}px</p>
+      <p>Window Height: {height}px</p>
+    </div>
+  );
+}
+
+export default App;
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+inheritance in javascript:
+// Parent "Person" constructor
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  
+  // Add a method to the "Person" prototype
+  Person.prototype.sayHello = function () {
+    console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+  };
+  
+  // Child "Student" constructor, inheriting from "Person"
+  function Student(name, age, school) {
+    // Call the parent constructor to set name and age
+    Person.call(this, name, age);
+    this.school = school;
+  }
+  
+  // Set up prototype chain for inheritance
+  Student.prototype = Object.create(Person.prototype);
+  Student.prototype.constructor = Student;
+  
+  // Add a method to the "Student" prototype
+  Student.prototype.study = function () {
+    console.log(`${this.name} is studying at ${this.school}.`);
+  };
+  
+  // Create instances of "Person" and "Student"
+  const person1 = new Person('Alice', 30);
+  const student1 = new Student('Bob', 20, 'ABC School');
+  
+  // Test the inheritance
+  person1.sayHello();   // Output: Hello, my name is Alice and I am 30 years old.
+  student1.sayHello();  // Output: Hello, my name is Bob and I am 20 years old.
+  student1.study();     // Output: Bob is studying at ABC School.
+  -------------------------------------------------------------------------------------------------------------------------
+
+write a program to study conditional statements loops and functions:
+// Conditional Statements
+function isEven(number) {
+  if (number % 2 === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const num1 = 10;
+const num2 = 7;
+
+if (isEven(num1)) {
+  console.log(`${num1} is even.`);
+} else {
+  console.log(`${num1} is odd.`);
+}
+
+if (isEven(num2)) {
+  console.log(`${num2} is even.`);
+} else {
+  console.log(`${num2} is odd.`);
+}
+
+// Loops
+function printNumbersUpTo(limit) {
+  for (let i = 1; i <= limit; i++) {
+    console.log(i);
+  }
+}
+
+console.log("Numbers from 1 to 5:");
+printNumbersUpTo(5);
+
+// Functions
+function calculateSquareArea(side) {
+  return side * side;
+}
+
+const sideLength = 4;
+const squareArea = calculateSquareArea(sideLength);
+console.log(`Area of a square with side length ${sideLength} is: ${squareArea}`);
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+props and state :
+import React, { Component } from 'react';
+
+// Child Component that uses props
+function Welcome(props) {
+  return <h2>Hello, {props.name}</h2>;
+}
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+  }
+
+  incrementCount = () => {
+    this.setState({ count: this.state.count + 1 });
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>Props and State Example</h1>
+        {/* Passing data to a child component using props */}
+        <Welcome name="Alice" />
+        <Welcome name="Bob" />
+        <Welcome name="Charlie" />
+
+        {/* Using state to manage and display data */}
+        <p>Count: {this.state.count}</p>
+        <button onClick={this.incrementCount}>Increment Count</button>
+      </div>
+    );
+  }
+}
+
+export default App;
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+FORMS AND EVNETS:
+import React, { Component } from 'react';
+
+class FormExample extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      inputValue: '',
+      submittedValue: '',
+    };
+  }
+
+  handleInputChange = (event) => {
+    this.setState({ inputValue: event.target.value });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.setState({ submittedValue: this.state.inputValue });
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>React Form and Events Example</h1>
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Enter a value:
+            <input
+              type="text"
+              value={this.state.inputValue}
+              onChange={this.handleInputChange}
+            />
+          </label>
+          <button type="submit">Submit</button>
+        </form>
+        {this.state.submittedValue && (
+          <p>Submitted Value: {this.state.submittedValue}</p>
+        )}
+      </div>
+    );
+  }
+}
+
+export default FormExample;
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+asynchronous programming using promises:
+// Simulate an asynchronous operation with a Promise
+function fetchData() {
+    return new Promise((resolve, reject) => {
+      // Simulating a network request with a setTimeout
+      setTimeout(() => {
+        const data = { message: 'Data fetched successfully!' };
+        resolve(data); // Resolve the Promise with the data
+      }, 2000);
+    });
+  }
+  
+  // Usage of the Promise
+  console.log('Fetching data...');
+  
+  fetchData()
+    .then((data) => {
+      console.log(data.message);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  ------------------------------------------
+fetch in js
+// Define the URL of the API or resource you want to fetch data from
+const apiUrl = 'https://api.example.com/data';
+
+// Use the fetch function to make a GET request to the specified URL
+fetch(apiUrl)
+  .then(response => {
+    // Check if the response status is OK (status code 200)
+    if (!response.ok) {
+      throw new Error(`Network response was not ok, status: ${response.status}`);
+    }
+    // Parse the response data as JSON
+    return response.json();
+  })
+  .then(data => {
+    // Use the data you fetched in this block
+    console.log('Fetched data:', data);
+  })
+  .catch(error => {
+    // Handle any errors that occurred during the fetch process
+    console.error('Error:', error);
+  });
+
+
+
+
+
